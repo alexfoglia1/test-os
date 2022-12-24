@@ -8,7 +8,6 @@ else
   echo "Built boot.s"
 fi
 
-
 echo "Building kernel . . ."
 if ! ${TARGET}-gcc -c ../src/kernel.c -o kernel.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra; then
   echo "Error. Aborting"
