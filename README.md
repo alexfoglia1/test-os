@@ -36,12 +36,12 @@ Or
 
     ./install.sh
 
-And copy the "dist" directory inside another envirnoment and then launch grub-mkrescue in the dist folder. (Useful in case of Cygwin is used : grub-mkrescue is no longer supported).
+And copy the "dist" directory inside another envirnoment and then launch grub-mkrescue in the "dist" folder. (Useful in case of Cygwin is used : grub-mkrescue is no longer supported).
 
 ## How to use it
 
 Create a x86 virtual machine (e.g. VirtualBox, QEMU, VmWare) and assign the test-os.iso as the bootable media of the newly created virtual machine.
-Last generated iso image is available in dist subfolder.
+Last generated iso image is available in "dist" subfolder.
 
 
 
