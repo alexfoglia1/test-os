@@ -167,7 +167,11 @@ void test_kernel_main(void)
 		}
 		strcpy(line, "Hello, Kernel ");
 
+		/** strlen(line) = 14 : first '\0' is at pos [14] */
 		line[strlen(line)] = i;
+		/** strlen(line) = 15 : first '\0' is at pos [15] */
+		line[strlen(line)] = '\n';
+		/** strlen(line) = 16 : first '\0' is at pos [16] */
 		terminal_writestring((const char*) line);
 	}
 }
