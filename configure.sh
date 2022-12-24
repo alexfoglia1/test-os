@@ -16,9 +16,8 @@ echo "mkdir -p isodir/boot/grub" > $BUILDROOT/conf-grub.sh
 echo "cp $OSNAME.bin isodir/boot/$OSNAME.bin" >> $BUILDROOT/conf-grub.sh
 echo "cp ../grub.cfg isodir/boot/grub/grub.cfg" >> $BUILDROOT/conf-grub.sh
 
-echo "mkdir -p ../dist/" >> $BUILDROOT/install.sh
-echo "cp -r isodir ../dist/" > $BUILDROOT/install.sh
-echo "cp $OSNAME.bin ../dist/" >>  $BUILDROOT/install.sh
+echo "mkdir -p ../dist/" > $BUILDROOT/install.sh
+echo "cp -r isodir ../dist/isodir" >> $BUILDROOT/install.sh
 
 chmod +x $BUILDROOT/build.sh
 chmod +x $BUILDROOT/conf-grub.sh
