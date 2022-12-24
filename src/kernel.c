@@ -79,30 +79,23 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
 	terminal_buffer[index] = vga_entry(c, color);
 }
 
-void terminal_move_rowsup(size_t n)
+void terminal_move_rowsup()
 {
-	if (VGA_HEIGHT == n)
+	for (size_t y = 0; y < VGA_HEIGHT - 1; y++)
 	{
-		terminal_initialize();
-	}
-	else if (n < VGA_HEIGHT)
-	{
-		for (int y = n - 1; y >= 0; y--)
-		{
-			int current_row_offset = (VGA_HEIGHT - y - 1) * VGA_WIDTH;
-			int target_row_offset = (VGA_HEIGHT - y - 2) * VGA_WIDTH;
+		int current_row_offset = y * VGA_WIDTH;
+		int target_row_offset = (y + 1) * VGA_WIDTH;
 			
-			for (size_t x = 0; x < VGA_WIDTH; x++)
-			{
-				terminal_buffer[target_row_offset + x] = terminal_buffer[current_row_offset + x];
-			} 
-		}
-
-		terminal_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
 		for (size_t x = 0; x < VGA_WIDTH; x++)
 		{
-			terminal_buffer[(VGA_HEIGHT - 1) * VGA_WIDTH + x] = vga_entry(' ', terminal_color);
-		}
+			terminal_buffer[current_row_offset + x] = terminal_buffer[target_row_offset + x];
+		} 
+	}
+
+	terminal_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
+	for (size_t x = 0; x < VGA_WIDTH; x++)
+	{
+		terminal_buffer[(VGA_HEIGHT - 1) * VGA_WIDTH + x] = vga_entry(' ', terminal_color);
 	}
 }
  
