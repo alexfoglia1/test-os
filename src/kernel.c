@@ -156,18 +156,18 @@ void test_kernel_main(void)
  
 	for (char i = '0'; i <= 'Z'; i += 1)
 	{
-		char line[128];
-		for (int j = 0; j < 128; j++)
+		char line[256];
+		for (int j = 0; j < 256; j++)
 		{
 			line[j] = 0;
 		}
-		strcpy(line, "Hello, Kernel ");
+		strcpy(line, "Hello, Kernel, abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzqwertyuiopasdfghjklzxcvbnmabcdefghijklmnopqrstuvwxyz012345678987654321aabbccddeeffgghh12 ");
 
-		/** strlen(line) = 14 : first '\0' is at pos [14] */
+		/** strlen(line) = l0 : first '\0' is at pos [l0] */
 		line[strlen(line)] = i;
-		/** strlen(line) = 15 : first '\0' is at pos [15] */
+		/** strlen(line) = l0+1 : first '\0' is at pos [l0+1] */
 		line[strlen(line)] = '\n';
-		/** strlen(line) = 16 : first '\0' is at pos [16] */
+		/** strlen(line) = l0+2 : first '\0' is at pos [l0+2] */
 		terminal_writestring((const char*) line);
 	}
 }
