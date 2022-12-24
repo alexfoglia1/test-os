@@ -109,6 +109,7 @@ void terminal_putchar(char c)
 		if (VGA_HEIGHT == terminal_row)
 		{
 			terminal_move_rowsup();
+			terminal_row = VGA_HEIGHT - 1;
 		}
 	}
 	else
