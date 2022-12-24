@@ -9,7 +9,7 @@ The kernel writes to screen 36 rows:
 
     Hello, kernel <n>
 
-Where <n> is a character from '0' to 'Z'.
+Where n is a character from '0' to 'Z'.
 Terminal scrolling and new lines are implemented.
 
 ## How to build it
