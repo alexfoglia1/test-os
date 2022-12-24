@@ -1,5 +1,6 @@
 ./env-build.sh
 
+echo "Exporting current install files . . ."
 if [ ! -d "isodir" ]; then
   echo "Cannot find isodir. Aborting"
 else
