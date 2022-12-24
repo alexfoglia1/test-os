@@ -118,17 +118,19 @@ void terminal_putchar(char c)
 			terminal_move_rowsup(1);
 		}
 	}
-
-	terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
-
-	if (++terminal_column == VGA_WIDTH)
+	else
 	{
-		terminal_column = 0;
-		if (++terminal_row == VGA_HEIGHT)
-		{
-			terminal_row = VGA_HEIGHT - 1;
+		terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
 
-			terminal_move_rowsup(1);
+		if (++terminal_column == VGA_WIDTH)
+		{
+			terminal_column = 0;
+			if (++terminal_row == VGA_HEIGHT)
+			{
+				terminal_row = VGA_HEIGHT - 1;
+
+				terminal_move_rowsup(1);
+			}
 		}
 	}
 }
