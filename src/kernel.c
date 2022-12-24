@@ -58,8 +58,10 @@ void terminal_initialize(void)
 	terminal_column = 0;
 	terminal_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
 	terminal_buffer = (uint16_t*) 0xB8000;
-	for (size_t y = 0; y < VGA_HEIGHT; y++) {
-		for (size_t x = 0; x < VGA_WIDTH; x++) {
+	for (size_t y = 0; y < VGA_HEIGHT; y++)
+	{
+		for (size_t x = 0; x < VGA_WIDTH; x++)
+		{
 			const size_t index = y * VGA_WIDTH + x;
 			terminal_buffer[index] = vga_entry(' ', terminal_color);
 		}
@@ -76,14 +78,58 @@ void terminal_putentryat(char c, uint8_t color, size_t x, size_t y)
 	const size_t index = y * VGA_WIDTH + x;
 	terminal_buffer[index] = vga_entry(c, color);
 }
+
+void terminal_move_rowsup(size_t n)
+{
+	if (VGA_HEIGHT == n)
+	{
+		terminal_initialize();
+	}
+	else if (n < VGA_HEIGHT)
+	{
+		for (int y = n - 1; y >= 0; y--)
+		{
+			int current_row_offset = (VGA_HEIGHT - y - 1) * VGA_WIDTH;
+			int target_row_offset = (VGA_HEIGHT - y - 2) * VGA_WIDTH;
+			
+			for (size_t x = 0; x < VGA_WIDTH; x++)
+			{
+				terminal_buffer[target_row_offset + x] = terminal_buffer[current_row_offset + x];
+			} 
+		}
+
+		terminal_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
+		for (size_t x = 0; x < VGA_WIDTH; x++)
+		{
+			terminal_buffer[(VGA_HEIGHT - 1) * VGA_WIDTH + x] = vga_entry(' ', terminal_color);
+		}
+	}
+}
  
 void terminal_putchar(char c) 
 {
+	if ('\n' == c)
+	{
+		terminal_column = 0;
+		terminal_row += 1;
+
+		if (VGA_HEIGHT == terminal_row)
+		{
+			terminal_move_rowsup(1);
+		}
+	}
+
 	terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
-	if (++terminal_column == VGA_WIDTH) {
+
+	if (++terminal_column == VGA_WIDTH)
+	{
 		terminal_column = 0;
 		if (++terminal_row == VGA_HEIGHT)
-			terminal_row = 0;
+		{
+			terminal_row = VGA_HEIGHT - 1;
+
+			terminal_move_rowsup(1);
+		}
 	}
 }
  
@@ -97,12 +143,31 @@ void terminal_writestring(const char* data)
 {
 	terminal_write(data, strlen(data));
 }
+
+void strcpy(char* dst, const char* src)
+{
+	int i = 0;
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+}
  
 void kernel_main(void) 
 {
-	/* Initialize terminal interface */
 	terminal_initialize();
  
-	/* Newline support is left as an exercise. */
-	terminal_writestring("Hello, kernel World!\n");
+	for (char i = '0'; i <= '9'; i += 1)
+	{
+		char line[128];
+		for (int j = 0; j < 128; j++)
+		{
+			line[j] = 0;
+		}
+		strcpy(line, "Hello, Kernel ");
+
+		line[strlen(line)] = i;
+		terminal_writestring((const char*) line);
+	}
 }
