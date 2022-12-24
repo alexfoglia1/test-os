@@ -5,12 +5,11 @@ if [ ! -d "isodir" ]; then
 else
   if [ ! -d ../dist ]; then
     mkdir ../dist
+  else
+    echo "Erasing old installed files . . ."
+    rm -fr ../dist
+    mkdir ../dist
   fi
-  if [ -d ../dist/isodir ]; then
-    echo "Erasing old installed ISO . . ."
-    rm -fr ../dist/*
-  fi
-  echo "Installing isodir in dist/isodir . . ." 
-  cp -r isodir ../dist/isodir
+  cp -r isodir ../dist
   echo "Done!"
 fi
