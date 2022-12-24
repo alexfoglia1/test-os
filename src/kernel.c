@@ -160,7 +160,7 @@ void test_kernel_main(void)
 {
 	terminal_initialize();
  
-	for (char i = '0'; i <= '9'; i += 1)
+	for (char i = '0'; i <= 'Z'; i += 1)
 	{
 		char line[128];
 		for (int j = 0; j < 128; j++)
