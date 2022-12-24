@@ -154,7 +154,7 @@ void strcpy(char* dst, const char* src)
 	}
 }
  
-void kernel_main(void) 
+void test_kernel_main(void) 
 {
 	terminal_initialize();
  

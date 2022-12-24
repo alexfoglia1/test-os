@@ -21,7 +21,7 @@ stack_head:
 .type _start, @function
 _start:
 	mov $stack_head, %esp
-	call kernel_main
+	call test_kernel_main
 	cli
 1:	hlt
 	jmp 1b
